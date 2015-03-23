@@ -36,8 +36,11 @@ class TaskList:
 		if (self.selected >= 1):
 			self.selected = self.selected - 1
 
+	def add_task(self, task, idx=0):
+		self.lst = self.lst[0:idx] + task + self.lst[idx:-1]
+
 	def toggle(self, idx=None):
-		if idx == None:
+		if idx is None:
 			idx = self.selected
 		self.lst[idx].completed = not self.lst[idx].completed
 
@@ -109,6 +112,8 @@ class Interface:
 				tasks.first_item()
 			elif key == curses.KEY_END:
 				tasks.last_item()
+			elif key == ord('n'):
+				self.new_task()
 			elif key == ord('s'):
 				self.status = "saving..."
 				tasks.save()
@@ -116,7 +121,6 @@ class Interface:
 			elif key == 10:
 				# Apparently the ENTER key, according to cortex
 				tasks.toggle()
-
 
 	def cleanup(self):
 		pass
